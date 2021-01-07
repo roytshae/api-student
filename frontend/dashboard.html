@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Welcome to Dashboard</h1>
+
+	<table border="1px;">
+		<thead>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Email
+				</th>
+				<th>
+					Class
+				</th>
+			</tr>
+		</thead>
+		<tbody id="tb">
+						
+			
+		</tbody>
+	</table>
+<script type="text/javascript">
+	function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+$.ajax
+({
+  type: "GET",
+  url: "http://localhost/api-lesson/getStudents.php",
+  dataType: 'json',
+  headers: {
+    "Authorization": "Bearer " + getCookie("token"),
+},
+  success: function (data,status,xhr){
+    //console.log(data);
+  	data.data.forEach(function(student){
+  		 $("#tb").append(`<tr><td><input value="${student.name}"/></td><td>${student.email}</td><td>${student.class}</td></tr>`);
+
+  	})
+  }
+
+});
+
+
+
+
+</script>
+
+
+</body>
+
+</html>
